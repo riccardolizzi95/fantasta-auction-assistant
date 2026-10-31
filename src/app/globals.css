@@ -1,0 +1,257 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #0b0f14;
+  --bg-elevated: #121821;
+  --bg-input: #0e141c;
+  --panel: #151d28;
+  --border: #223041;
+  --border-strong: #2e4257;
+  --text: #e8eef6;
+  --text-muted: #93a4b8;
+  --text-faint: #63748a;
+  --accent: #37d67a;
+  --accent-dim: #1e6b42;
+  --warn: #f5a623;
+  --danger: #f2555a;
+  --info: #4aa3f0;
+  --role-p: #f5a623;
+  --role-d: #4aa3f0;
+  --role-c: #37d67a;
+  --role-a: #f2555a;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-panel: var(--panel);
+  --color-elevated: var(--bg-elevated);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text: var(--text);
+  --color-muted: var(--text-muted);
+  --color-faint: var(--text-faint);
+  --color-accent: var(--accent);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  border-color: var(--border);
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+  /* Nessuna barra orizzontale, mai.
+     Un riquadro di aiuto che sporge di venti pixel oltre il bordo destro fa
+     comparire una barra lunga tutta la pagina, e da li' in poi tutto balla di
+     lato mentre si cerca un giocatore. `clip` taglia e basta: `hidden`
+     creerebbe un contenitore di scorrimento e romperebbe gli elementi che
+     restano fissi in cima mentre si scorre. */
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--accent-dim);
+  color: #fff;
+}
+
+/* Scrollbar discreta, l'asta e' fatta di liste lunghe */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 6px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d566f;
+}
+
+input,
+select,
+textarea {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  color: var(--text);
+  font-size: 0.9rem;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgb(55 214 122 / 0.12);
+}
+input::placeholder {
+  color: var(--text-faint);
+}
+select option {
+  background: var(--bg-elevated);
+}
+
+label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+@layer utilities {
+  .panel {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+  }
+  .panel-flat {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    border-radius: 9px;
+    padding: 0.55rem 0.95rem;
+    font-size: 0.86rem;
+    font-weight: 600;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elevated);
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.12s ease;
+    white-space: nowrap;
+  }
+  .btn:hover:not(:disabled) {
+    border-color: #3d566f;
+    background: #1a2431;
+  }
+  .btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+  .btn-primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #06240f;
+  }
+  .btn-primary:hover:not(:disabled) {
+    background: #45e389;
+    border-color: #45e389;
+  }
+  .btn-danger {
+    background: transparent;
+    border-color: #5a2a2c;
+    color: var(--danger);
+  }
+  .btn-danger:hover:not(:disabled) {
+    background: #2a1618;
+    border-color: var(--danger);
+  }
+  .btn-sm {
+    padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: 999px;
+    padding: 0.15rem 0.55rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+  }
+  .num {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+  }
+  .label-xs {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+  }
+}
+
+/**
+ * Le barre di scorrimento, in tono con il resto.
+ *
+ * Con tre colonne che scorrono per conto loro, le barre di sistema erano tre
+ * strisce chiare in mezzo a una pagina scura — e agli angoli, dove due barre si
+ * incontrano, un quadratino bianco. Non e' un dettaglio estetico: un quadrato
+ * bianco su fondo nero e' la cosa piu' luminosa dello schermo, e l'occhio ci
+ * va.
+ */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 999px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-faint);
+  background-clip: content-box;
+}
+
+/* L'annuncio dell'aggiudicazione entra dall'alto: un movimento breve, perche'
+   serve a farsi notare, non a farsi guardare. */
+@keyframes aggiudicato {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Il tempo che resta a un annuncio, detto da una riga che si consuma. */
+@keyframes conto {
+  from {
+    transform: scaleX(1);
+  }
+  to {
+    transform: scaleX(0);
+  }
+}
